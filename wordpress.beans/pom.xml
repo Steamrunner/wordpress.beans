@@ -42,7 +42,7 @@
 	<distributionManagement>
 		<repository>
 			<id>maven.koen.devoegt.be</id>
-			<url>file:D:/var/www</url>
+			<url>file:/var/www/html</url>
 		</repository>
 	</distributionManagement>
 </project>
