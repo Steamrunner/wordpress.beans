@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import be.devoegt.koen.wordpress.beans.Post;
 
-public class PostTests {
+public class PostTest {
 
 	private Post post; 
 	
