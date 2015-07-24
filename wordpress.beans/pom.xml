@@ -31,5 +31,18 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-file</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
 	</build>
+	<distributionManagement>
+		<repository>
+			<id>maven.koen.devoegt.be</id>
+			<url>file:D:/var/www</url>
+		</repository>
+	</distributionManagement>
 </project>
