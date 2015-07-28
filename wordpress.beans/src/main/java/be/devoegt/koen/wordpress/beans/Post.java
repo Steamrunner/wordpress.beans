@@ -23,6 +23,8 @@ public class Post implements Serializable, Comparable<Post> {
 	private URL link, guid;
 	private LocalDateTime date, modified, date_gmt, modified_gmt;
 	private Author author;
+	@JsonProperty("featured_image")
+	private Media featuredImage;
 
 	// date_tz
 	// modified_tz
@@ -137,6 +139,10 @@ public class Post implements Serializable, Comparable<Post> {
 
 	public Author getAuthor() {
 		return author;
+	}
+	
+	public Media getFeaturedImage() {
+		return featuredImage;
 	}
 
 	public int compareTo(Post post) {
