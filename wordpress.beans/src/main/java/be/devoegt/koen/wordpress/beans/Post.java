@@ -30,9 +30,8 @@ public class Post implements Serializable, Comparable<Post> {
 	// modified_tz
 
 	// meta
-	// featured_image
 	// terms
-	
+
 	public int getID() {
 		return ID;
 	}
@@ -40,7 +39,7 @@ public class Post implements Serializable, Comparable<Post> {
 	public void setID(int ID) {
 		this.ID = ID;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -92,19 +91,19 @@ public class Post implements Serializable, Comparable<Post> {
 	public URL getLink() {
 		return link;
 	}
-	
+
 	public void setLink(String linkString) throws MalformedURLException {
 		link = new URL(linkString);
 	}
-	
+
 	public URL getGuid() {
 		return guid;
 	}
-	
+
 	public void setGuid(String guidString) throws MalformedURLException {
 		guid = new URL(guidString);
 	}
-	
+
 	public LocalDateTime getDate() {
 		return date;
 	}
@@ -140,7 +139,7 @@ public class Post implements Serializable, Comparable<Post> {
 	public Author getAuthor() {
 		return author;
 	}
-	
+
 	public Media getFeaturedImage() {
 		return featuredImage;
 	}
@@ -150,7 +149,7 @@ public class Post implements Serializable, Comparable<Post> {
 		// based on modified date
 		return 0;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -167,9 +166,8 @@ public class Post implements Serializable, Comparable<Post> {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass()) {
-			System.out.println("fails here");
-			return false;}
+		if (getClass() != obj.getClass())
+			return false;
 		Post other = (Post) obj;
 		if (ID != other.ID)
 			return false;
