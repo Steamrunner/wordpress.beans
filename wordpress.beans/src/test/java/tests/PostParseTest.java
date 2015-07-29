@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import be.devoegt.koen.wordpress.beans.Post;
 
 @RunWith(Parameterized.class)
-public class PostTest {
+public class PostParseTest {
 
 	private static Post post;
 
@@ -51,8 +51,8 @@ public class PostTest {
 
 	}
 
-	public PostTest(Post post) {
-		PostTest.post = post;
+	public PostParseTest(Post post) {
+		PostParseTest.post = post;
 	}
 
 	@Test
