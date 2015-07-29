@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,7 +25,8 @@ public class Post implements Serializable, Comparable<Post> {
 	private LocalDateTime date, modified, date_gmt, modified_gmt;
 	private Author author;
 	@JsonProperty("featured_image")
-	private Media featuredImage;
+	private Media featured_image;
+	private ZoneId date_tz, modified_tz;
 
 	// date_tz
 	// modified_tz
@@ -141,7 +143,23 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 	public Media getFeaturedImage() {
-		return featuredImage;
+		return featured_image;
+	}
+	
+	public ZoneId getDate_tz() {
+		return date_tz;
+	}
+
+	public void setDate_tz(String date_tz) {
+		this.date_tz = ZoneId.of(date_tz);
+	}
+
+	public ZoneId getModified_tz() {
+		return modified_tz;
+	}
+
+	public void setModified_tz(String modified_tz) {
+		this.modified_tz = ZoneId.of(modified_tz);
 	}
 
 	public int compareTo(Post post) {

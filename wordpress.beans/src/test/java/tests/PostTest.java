@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.net.MalformedURLException;
+import java.time.ZoneId;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -28,6 +29,16 @@ public class PostTest {
 		
 	}
 
+	@Test
+	public void getDate_tz_returnsValue() {
+		assertEquals(ZoneId.of("Europe/London"), post.getDate_tz());
+	}
+	
+	@Test
+	public void getModified_tz_returnsValue() {
+		assertEquals(ZoneId.of("Europe/London"), post.getModified_tz());
+	}
+	
 	@Test
 	public void getID_returnsValue() {
 		assertEquals(33933, post.getID());
