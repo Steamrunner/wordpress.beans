@@ -28,9 +28,6 @@ public class Post implements Serializable, Comparable<Post> {
 	private Media featured_image;
 	private ZoneId date_tz, modified_tz;
 
-	// date_tz
-	// modified_tz
-
 	// meta
 	// terms
 
