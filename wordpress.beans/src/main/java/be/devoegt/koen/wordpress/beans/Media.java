@@ -2,12 +2,6 @@ package be.devoegt.koen.wordpress.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-//import java.net.MalformedURLException;
-//import java.net.URL;
-//import java.time.LocalDateTime;
-//
-//import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Media extends Post {
 
 	private static final long serialVersionUID = -7183062277504305273L;
@@ -17,8 +11,16 @@ public class Media extends Post {
 	private boolean image;
 //	private ATTACHMENT_META
 
+//	public Media(String string) {
+//		
+//	}
+	
 	public String getSource() {
 		return source;
 	}
+	
+//	public boolean isImage() {
+//		return image;
+//	}
 	
 }

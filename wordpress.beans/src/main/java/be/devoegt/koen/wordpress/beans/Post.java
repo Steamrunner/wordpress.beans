@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = false)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Post implements Serializable, Comparable<Post> {
 
 	private static final long serialVersionUID = -467706187698544476L;
@@ -24,8 +24,8 @@ public class Post implements Serializable, Comparable<Post> {
 	private URL link, guid;
 	private LocalDateTime date, modified, date_gmt, modified_gmt;
 	private Author author;
-	@JsonProperty("featured_image")
-	private Media featured_image;
+	// @JsonProperty("featured_image")
+	// private Media featured_image;
 	private ZoneId date_tz, modified_tz;
 
 	// meta
@@ -92,7 +92,10 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 	public void setLink(String linkString) throws MalformedURLException {
-		link = new URL(linkString);
+		if (!linkString.isEmpty())
+			guid = new URL(linkString);
+		else 
+			guid = null;
 	}
 
 	public URL getGuid() {
@@ -100,7 +103,10 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 	public void setGuid(String guidString) throws MalformedURLException {
-		guid = new URL(guidString);
+		if (!guidString.isEmpty())
+			guid = new URL(guidString);
+		else 
+			guid = null;
 	}
 
 	public LocalDateTime getDate() {
@@ -108,7 +114,7 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 	public void setDate(String dateString) {
-		this.date = LocalDateTime.parse(dateString);
+		// this.date = LocalDateTime.parse(dateString);
 	}
 
 	public LocalDateTime getModified() {
@@ -116,7 +122,7 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 	public void setModified(String dateString) {
-		this.modified = LocalDateTime.parse(dateString);
+		// this.modified = LocalDateTime.parse(dateString);
 	}
 
 	public LocalDateTime getDate_gmt() {
@@ -140,9 +146,9 @@ public class Post implements Serializable, Comparable<Post> {
 	}
 
 	public Media getFeaturedImage() {
-		return featured_image;
+		return null;// featured_image;
 	}
-	
+
 	public ZoneId getDate_tz() {
 		return date_tz;
 	}

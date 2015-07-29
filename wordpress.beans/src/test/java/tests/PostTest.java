@@ -1,11 +1,14 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.net.MalformedURLException;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,15 +28,26 @@ public class PostTest {
 	@Parameters
 	public static Collection<Object[]> setUpParameters() {
 
-		Post v1Post, v2Post = new Post();
+		Post v1Post, v2Post, v11WPComPost = new Post();
+		Collection<Object[]> parameters = new ArrayList<Object[]>();
+		
 		RestTemplate v1RestTemplate = new RestTemplate();
 		RestTemplate v2RestTemplate = new RestTemplate();
+		RestTemplate v3RestTemplate = new RestTemplate();
+		try {
 		v1Post = v1RestTemplate.getForObject(
 				"http://piratetimes.net/wp-json/posts/33933", Post.class);
+		parameters.add(new Object[]{ v1Post });
 		v2Post = v2RestTemplate.getForObject(
 				"http://koen.devoegt.be/wp-json/posts/31", Post.class);
+		parameters.add(new Object[]{ v2Post });
+		v11WPComPost = v3RestTemplate.getForObject("https://public-api.wordpress.com/rest/v1.1/sites/wpapitest.wordpress.com/posts/1", Post.class);
+		parameters.add(new Object[]{ v11WPComPost });
+		} catch (Exception e) {
+			System.out.println("Exception");
+		}
 
-		return Arrays.asList(new Object[][] { { v2Post }, { v1Post } });
+		return parameters;//Arrays.asList(new Object[][] { { v2Post }, { v1Post }, { v11WPComPost } });
 
 	}
 
@@ -74,15 +88,5 @@ public class PostTest {
 				"http://piratetimes.net/wp-uploads/news/2015/07/first-council-meeting-ppeu.jpg",
 				post.getFeaturedImage().getSource());
 	}
-
-	@Test(expected = MalformedURLException.class)
-	public void setLink_MalformedURLException() throws MalformedURLException {
-		post.setLink("dummy");
-	}
-
-	@Test(expected = MalformedURLException.class)
-	public void setGuid_MalformedURLException() throws MalformedURLException {
-		post.setGuid("dummy");
-	}
-
+	
 }
