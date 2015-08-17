@@ -5,14 +5,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Post implements Serializable, Comparable<Post> {
 
 	private static final long serialVersionUID = -467706187698544476L;
+
+	// Overlapping
 
 	private boolean sticky;
 	@JsonProperty("ID")
@@ -22,11 +26,13 @@ public class Post implements Serializable, Comparable<Post> {
 	private String title, status, type, content, parent, format, slug, excerpt,
 			comment_status, ping_status;
 	private URL link, guid;
-	private LocalDateTime date, modified, date_gmt, modified_gmt;
-	private Author author;
-	// @JsonProperty("featured_image")
-	// private Media featured_image;
+	private LocalDateTime date_gmt, modified_gmt;
+	private ZonedDateTime date, modified;
 	private ZoneId date_tz, modified_tz;
+	private Author author;
+	private Media featured_image;
+
+	// v1 specific
 
 	// meta
 	// terms
@@ -39,6 +45,10 @@ public class Post implements Serializable, Comparable<Post> {
 		this.ID = ID;
 	}
 
+	public int getMenu_order() {
+		return menu_order;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -79,10 +89,6 @@ public class Post implements Serializable, Comparable<Post> {
 		return ping_status;
 	}
 
-	public int getMenu_order() {
-		return menu_order;
-	}
-
 	public boolean isSticky() {
 		return sticky;
 	}
@@ -91,38 +97,44 @@ public class Post implements Serializable, Comparable<Post> {
 		return link;
 	}
 
-	public void setLink(String linkString) throws MalformedURLException {
-		if (!linkString.isEmpty())
-			guid = new URL(linkString);
-		else 
-			guid = null;
+	public void setLink(String linkString) {
+		try {
+			link = new URL(linkString);
+		} catch (MalformedURLException e) {
+			link = null;
+		}
 	}
 
 	public URL getGuid() {
 		return guid;
 	}
 
-	public void setGuid(String guidString) throws MalformedURLException {
-		if (!guidString.isEmpty())
+	public void setGuid(String guidString) {
+		try {
 			guid = new URL(guidString);
-		else 
+		} catch (MalformedURLException e) {
 			guid = null;
+		}
 	}
 
-	public LocalDateTime getDate() {
+	public ZonedDateTime getDate() {
 		return date;
 	}
 
 	public void setDate(String dateString) {
-		// this.date = LocalDateTime.parse(dateString);
+		date = getDate(dateString);
+		if (date != null)
+			date_tz = date.getZone();
 	}
 
-	public LocalDateTime getModified() {
+	public ZonedDateTime getModified() {
 		return modified;
 	}
 
 	public void setModified(String dateString) {
-		// this.modified = LocalDateTime.parse(dateString);
+		modified = getDate(dateString);
+		if (modified != null)
+			modified_tz = date.getZone();
 	}
 
 	public LocalDateTime getDate_gmt() {
@@ -144,10 +156,14 @@ public class Post implements Serializable, Comparable<Post> {
 	public Author getAuthor() {
 		return author;
 	}
-
-	public Media getFeaturedImage() {
-		return null;// featured_image;
+	
+	public Media getFeatured_image() {
+		return featured_image;
 	}
+	
+	public void setFeatured_image(Object o) {
+		featured_image = null;
+	} 
 
 	public ZoneId getDate_tz() {
 		return date_tz;
@@ -198,6 +214,20 @@ public class Post implements Serializable, Comparable<Post> {
 		} else if (!modified.equals(other.modified))
 			return false;
 		return true;
+	}
+
+	private ZonedDateTime getDate(String dateString) {
+		try {
+			date = ZonedDateTime.parse(dateString);
+		} catch (DateTimeParseException e) {
+			try {
+				dateString = dateString + "+00:00";
+				date = ZonedDateTime.parse(dateString);
+			} catch (DateTimeParseException ex) {
+				date = null;
+			}
+		}
+		return date;
 	}
 
 }
